@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/text_grid"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="List of Text"/>
+        <item
+                android:id="@+id/two_image_grid"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="2x Grid of Images"/>
+        <item
+                android:id="@+id/three_image_grid"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="3x Grid of Images"/>
+    </group>
+
+</menu>
