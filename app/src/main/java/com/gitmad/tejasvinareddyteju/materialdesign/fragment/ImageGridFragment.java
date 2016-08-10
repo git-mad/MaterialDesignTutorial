@@ -12,25 +12,23 @@ import android.view.ViewGroup;
 import com.gitmad.tejasvinareddyteju.materialdesign.R;
 import com.gitmad.tejasvinareddyteju.materialdesign.adapter.ImageContentAdapter;
 import com.gitmad.tejasvinareddyteju.materialdesign.model.ImageContent;
-import com.gitmad.tejasvinareddyteju.materialdesign.model.ImageContent.DummyItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * A fragment representing a list of Items.
- * <p>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * A fragment that displays the the grid of items. Is customizable to display the grid in different-sized columns.
+ *
+ * @author nareddyt
  */
 public class ImageGridFragment extends Fragment {
 
+    // Data variables
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount;
-    private OnListFragmentInteractionListener mListener;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ImageGridFragment() {
+        // Mandatory empty constructor
     }
 
     public static ImageGridFragment newInstance(int columnCount) {
@@ -44,9 +42,6 @@ public class ImageGridFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        }
     }
 
     @Override
@@ -63,18 +58,26 @@ public class ImageGridFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_image_list, container, false);
 
-        // Set the adapter
+        // Set up the recycler view
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
 
+            // Set up the layout manager based on the column count
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            recyclerView.setAdapter(new ImageContentAdapter(ImageContent.ITEMS, mListener));
+            // Create the dummy image content
+            List<ImageContent> imageContentList = new ArrayList<>();
+            for (int i = 1; i <= 10; i++) {
+                imageContentList.add(new ImageContent(String.valueOf(i)));
+            }
+
+            // Set the adapter with the dummy list
+            recyclerView.setAdapter(new ImageContentAdapter(imageContentList));
         }
         return view;
     }
@@ -82,10 +85,5 @@ public class ImageGridFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(DummyItem item);
     }
 }

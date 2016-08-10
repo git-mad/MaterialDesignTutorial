@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.gitmad.tejasvinareddyteju.materialdesign.R;
-import com.gitmad.tejasvinareddyteju.materialdesign.fragment.ImageGridFragment.OnListFragmentInteractionListener;
-import com.gitmad.tejasvinareddyteju.materialdesign.model.ImageContent.DummyItem;
+import com.gitmad.tejasvinareddyteju.materialdesign.model.ImageContent;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -21,19 +20,20 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * A Recycler View Adapter that can display tiles of images in a grid. Each tile is loaded with a defaultImage and a
+ * color
+ * based on the defaultImage.
+ *
+ * @author nareddyt
  */
 public class ImageContentAdapter extends RecyclerView.Adapter<ImageContentAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final List<ImageContent> imageContentList;
     private final Random random;
     private Context context = null;
 
-    public ImageContentAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
+    public ImageContentAdapter(List<ImageContent> items) {
+        imageContentList = items;
         random = new Random();
     }
 
@@ -47,19 +47,24 @@ public class ImageContentAdapter extends RecyclerView.Adapter<ImageContentAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
+        // Get the correct id from the list, then set the text in the view
+        holder.mIdView.setText(imageContentList.get(position).getId());
 
         final int width = random.nextInt(20) + 90;
         final int height = random.nextInt(20) + 90;
+
+        // VERY hacky way to get a random defaultImage. Note that this happens asynchronously
+        // Tbh the defaultImage should be a part of the ImageContent, but this kinda works and is easier to implement
         Picasso.with(context).load("https://placeimg.com/" + width + "/" + height + "/tech").fit().into(holder
-                .mContentView, new Callback.EmptyCallback() {
+                .mImageView, new Callback.EmptyCallback() {
             @Override
             public void onSuccess() {
-                Bitmap bitmap = ((BitmapDrawable) holder.mContentView.getDrawable()).getBitmap();
+                // Get the bitmap from the defaultImage view holder
+                Bitmap bitmap = ((BitmapDrawable) holder.mImageView.getDrawable()).getBitmap();
 
+                // Use the Palette to determine a prominent color in the defaultImage
+                // Then set the background color of the card view
                 Palette palette = Palette.from(bitmap).generate();
-
                 holder.mCardView.setCardBackgroundColor(palette.getVibrantColor(255));
             }
         });
@@ -67,27 +72,25 @@ public class ImageContentAdapter extends RecyclerView.Adapter<ImageContentAdapte
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return imageContentList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
+        // Fields in the view
         public final TextView mIdView;
-        public final ImageView mContentView;
+        public final ImageView mImageView;
         public final CardView mCardView;
-        public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
-            mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (ImageView) view.findViewById(R.id.content);
+            mImageView = (ImageView) view.findViewById(R.id.content);
             mCardView = (CardView) view.findViewById(R.id.item_card);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.toString() + "'";
+            return super.toString() + " '" + mImageView.toString() + "'";
         }
     }
 }

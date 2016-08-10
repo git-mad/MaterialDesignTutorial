@@ -1,22 +1,20 @@
 package com.gitmad.tejasvinareddyteju.materialdesign.model;
 
+/**
+ * Class the represents the data in an text item.
+ *
+ * @author nareddyt
+ */
 public class TextContent implements Comparable<TextContent> {
-    private final String packageName;
-    private int loadCount;
+    private final String name;
 
-    public TextContent(String packageName) {
-
-        if (packageName == null) {
-            throw new IllegalArgumentException("Invalid package name!");
-        }
-
-        this.packageName = packageName;
-        loadCount = 1;
+    public TextContent(String name) {
+        this.name = name;
     }
 
     @Override
     public int compareTo(TextContent another) {
-        return packageName.compareTo(another.packageName);
+        return name.compareTo(another.name);
     }
 
     @Override
@@ -27,23 +25,15 @@ public class TextContent implements Comparable<TextContent> {
 
         TextContent aw = (TextContent) other;
 
-        return aw.packageName.equals(packageName);
+        return aw.name.equals(name);
     }
 
     @Override
     public String toString() {
-        return packageName + "-" + super.toString();
+        return name + "-" + super.toString();
     }
 
-    public int getLoadCount() {
-        return loadCount;
-    }
-
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public void incrementLoadCount() {
-        loadCount++;
+    public String getName() {
+        return name;
     }
 }

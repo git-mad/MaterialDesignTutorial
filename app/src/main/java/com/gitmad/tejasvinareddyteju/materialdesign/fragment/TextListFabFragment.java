@@ -18,6 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * A fragment that displays cards of text
+ *
+ * @author nareddyt
+ */
 public class TextListFabFragment extends Fragment {
 
     // Data variables
@@ -26,19 +31,13 @@ public class TextListFabFragment extends Fragment {
     // UI variables
     private SwipeRefreshLayout srl;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public TextListFabFragment() {
+        // Mandatory empty constructor
     }
 
     public static TextListFabFragment newInstance() {
-        TextListFabFragment fragment = new TextListFabFragment();
-        return fragment;
+        return new TextListFabFragment();
     }
 
     @Override
@@ -60,9 +59,9 @@ public class TextListFabFragment extends Fragment {
         // Mock data
         textContentList.add(new TextContent("Testing"));
 
-        // Set up recycler view
+        // Set up recycler view and the layout
         recyclerView = (RecyclerView) view.findViewById(R.id.app_list_recycler_view);
-        layoutManager = new LinearLayoutManager(this.getContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         // Set up swipe-up-to-refresh layout
@@ -75,9 +74,12 @@ public class TextListFabFragment extends Fragment {
             }
         });
 
-        // Reset the recycler view to set the adapter
+        // Reset the recycler view to set the adapter (automatically)
         refreshRecyclerView();
 
+        // Set up the FAB button to add a new item to the list whenever its clicked
+        // Use an atomic integer to maintain the int across multiple threads (the onClickListener happens in a
+        // different thread each time)
         final AtomicInteger atomicInteger = new AtomicInteger(0);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -91,14 +93,8 @@ public class TextListFabFragment extends Fragment {
     }
 
     private void refreshRecyclerView() {
-
         // Set up the adapter
-        adapter = new TextContentAdapter(textContentList,
-                new TextContentAdapter.FeedInteractionListener() {
-                    @Override
-                    public void onAppClicked(TextContent app, int index) {
-                    }
-                });
+        RecyclerView.Adapter adapter = new TextContentAdapter(textContentList);
         recyclerView.setAdapter(adapter);
     }
 }

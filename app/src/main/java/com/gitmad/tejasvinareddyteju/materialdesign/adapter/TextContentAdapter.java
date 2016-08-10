@@ -12,18 +12,16 @@ import com.gitmad.tejasvinareddyteju.materialdesign.model.TextContent;
 import java.util.List;
 
 /**
- * Adapter for displaying cardviews that represent apps in a RecyclerView.
+ * A Recycler View Adapter to display cards of text in a list. Each card is loaded with a the text and defaultImage.
+ *
+ * @author nareddyt
  */
-public class TextContentAdapter extends RecyclerView.Adapter<TextContentAdapter
-        .ViewHolder> {
+public class TextContentAdapter extends RecyclerView.Adapter<TextContentAdapter.ViewHolder> {
 
-    private List<TextContent> apps;
-    private FeedInteractionListener listener;
+    private List<TextContent> textContentList;
 
-    public TextContentAdapter(List<TextContent> apps, FeedInteractionListener
-            feedInteractionListener) {
-        this.apps = apps;
-        listener = feedInteractionListener;
+    public TextContentAdapter(List<TextContent> textContentList) {
+        this.textContentList = textContentList;
     }
 
     @Override
@@ -36,33 +34,23 @@ public class TextContentAdapter extends RecyclerView.Adapter<TextContentAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
-        viewHolder.packageName.setText(apps.get(i).getPackageName());
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onAppClicked(apps.get(i), i);
-            }
-        });
+        viewHolder.name.setText(textContentList.get(i).getName());
     }
 
     @Override
     public int getItemCount() {
-        return apps.size();
-    }
-
-    public interface FeedInteractionListener {
-        void onAppClicked(TextContent app, int index);
+        return textContentList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView packageName;
-        public ImageView image;
+        // Fields in the view
+        public TextView name;
+        public ImageView defaultImage;
 
         public ViewHolder(View appViewLayout) {
             super(appViewLayout);
-            packageName = (TextView) appViewLayout.findViewById(R.id.app_name);
-            image = (ImageView) appViewLayout.findViewById(R.id.app_image);
+            name = (TextView) appViewLayout.findViewById(R.id.app_name);
+            defaultImage = (ImageView) appViewLayout.findViewById(R.id.app_image);
         }
     }
 }
