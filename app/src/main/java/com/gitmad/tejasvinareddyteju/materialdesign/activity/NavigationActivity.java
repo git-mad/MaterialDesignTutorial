@@ -23,19 +23,14 @@ import com.gitmad.tejasvinareddyteju.materialdesign.fragment.TextListFabFragment
  *
  * @author nareddyt
  */
-public class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class NavigationActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        // TODO check if the drawer is open. If it is, then close the drawer.
+        // Otherwise, just use the default back button implementation
     }
 
     @Override
@@ -64,16 +59,9 @@ public class NavigationActivity extends AppCompatActivity
         // Handle the navigation drawer clicks here
         int id = item.getItemId();
 
-        // Instantiate the fragment object with the correct version of the fragment based on the navigation item
-        // selected
+        // TODO instantiate a Fragment object based on the MenuItem that is selected
+        // HINT: Polymorphism
         Fragment fragment = null;
-        if (id == R.id.text_grid) {
-            fragment = TextListFabFragment.newInstance();
-        } else if (id == R.id.two_image_grid) {
-            fragment = ImageGridFragment.newInstance(2);
-        } else if (id == R.id.three_image_grid) {
-            fragment = ImageGridFragment.newInstance(3);
-        }
 
         // Error checking
         if (fragment == null) {
@@ -81,12 +69,10 @@ public class NavigationActivity extends AppCompatActivity
             return false;
         }
 
-        // Insert the fragment by replacing any existing fragment with a fragment manager transaction
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, fragment).commit();
+        // TODO Transition to the fragment by changing the frame layout in the Navigation Drawer
+        // HINT: Use the FragmentManager
 
-        // Close the drawer when an item is selected
-        drawer.closeDrawer(GravityCompat.START);
+        // TODO Close the drawer when an item is selected
 
         return true;
     }
@@ -98,22 +84,20 @@ public class NavigationActivity extends AppCompatActivity
         // Set the view
         setContentView(R.layout.activity_navigation);
 
-        // Set up the actionbar using the support library
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        // TODO find the toolbar/actionbar in the view
+        // TODO Set up the actionbar using the support library
 
-        // Instantiate the drawer object by finding it
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // TODO Instantiate the drawer object from the XML
 
         // Set up the drawer toggle
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
+//                R.string.navigation_drawer_close);
+//        drawer.setDrawerListener(toggle);
+//        toggle.syncState();
 
-        // Set up the navigation view, which contains the entire navigation drawer
+        // Instantiate the navigation view, which shows the entire navigation drawer's view
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        // TODO set the proper NavigationItemSelectedListener
 
         // Use the fragment manager to begin a transaction to the first fragment
         FragmentManager fragmentManager = getSupportFragmentManager();

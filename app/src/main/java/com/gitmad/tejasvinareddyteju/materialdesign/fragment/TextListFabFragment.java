@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author nareddyt
  */
-public class TextListFabFragment extends Fragment {
+public class TextListFabFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     // Data variables
     private List<TextContent> textContentList = new ArrayList<>();
@@ -51,6 +51,12 @@ public class TextListFabFragment extends Fragment {
     }
 
     @Override
+    public void onRefresh() {
+        refreshRecyclerView();
+        srl.setRefreshing(false);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,20 +65,12 @@ public class TextListFabFragment extends Fragment {
         // Mock data
         textContentList.add(new TextContent("Testing"));
 
-        // Set up recycler view and the layout
-        recyclerView = (RecyclerView) view.findViewById(R.id.app_list_recycler_view);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        // TODO instantiate the RecyclerView from the XML
+        // TODO set up the recycler view to use a linear layout manager
 
         // Set up swipe-up-to-refresh layout
-        srl = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshRecyclerView();
-                srl.setRefreshing(false);
-            }
-        });
+        // TODO instantiate the SwipeRefreshLayout from the XML
+        // TODO set the proper OnRefreshListener
 
         // Reset the recycler view to set the adapter (automatically)
         refreshRecyclerView();
@@ -81,13 +79,10 @@ public class TextListFabFragment extends Fragment {
         // Use an atomic integer to maintain the int across multiple threads (the onClickListener happens in a
         // different thread each time)
         final AtomicInteger atomicInteger = new AtomicInteger(0);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textContentList.add(new TextContent("Test " + atomicInteger.getAndIncrement()));
-            }
-        });
+
+        // TODO instantiate the FAB from the XML
+        // TODO create an on click listener that will add a new item to the textContentList. Make sure to use the
+        // atomic integer to as a way to ID the text
 
         return view;
     }

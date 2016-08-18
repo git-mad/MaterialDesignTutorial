@@ -62,10 +62,8 @@ public class ImageContentAdapter extends RecyclerView.Adapter<ImageContentAdapte
                 // Get the bitmap from the defaultImage view holder
                 Bitmap bitmap = ((BitmapDrawable) holder.mImageView.getDrawable()).getBitmap();
 
-                // Use the Palette to determine a prominent color in the defaultImage
-                // Then set the background color of the card view
-                Palette palette = Palette.from(bitmap).generate();
-                holder.mCardView.setCardBackgroundColor(palette.getVibrantColor(255));
+                // TODO Use the Palette to determine a prominent color in the defaultImage
+                // TODO Then set the background color of the card view
             }
         });
     }
