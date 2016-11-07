@@ -30,7 +30,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
     @Override
     public void onBackPressed() {
         // TODO check if the drawer is open. If it is, then close the drawer.
-        // Otherwise, just use the default back button implementation
+        // Note that the drawer is declared on line 28. Just assume that it is initialized for now
+        // Otherwise, just use the default back button implementation by calling the super method
     }
 
     @Override
@@ -59,9 +60,18 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         // Handle the navigation drawer clicks here
         int id = item.getItemId();
 
-        // TODO instantiate a Fragment object based on the MenuItem that is selected
-        // HINT: Polymorphism
         Fragment fragment = null;
+        // TODO instantiate the fragment object (above) based on the MenuItem that is selected
+        // Essentially, we want to select a different fragment for each menu item that is clicked
+        // All the code should go in the if statements
+        // HINT: Polymorphism is useful
+        if (id == R.id.text_grid) {
+            // TODO instantiate the proper fragment, and store it in the fragment variable above
+        } else if (TODO) {
+            // TODO instantiate the proper fragment, and store it in the fragment variable above
+        } else if (TODO) {
+            // TODO instantiate the proper fragment, and store it in the fragment variable above
+        }
 
         // Error checking
         if (fragment == null) {
@@ -69,10 +79,13 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
             return false;
         }
 
-        // TODO Transition to the fragment by changing the frame layout in the Navigation Drawer
-        // HINT: Use the FragmentManager
+        // TODO Transition to the fragment by changing the main frame layout (in the Navigation Drawer)
+        // HINT: Use the FragmentManager and begin a transition to the next fragment
+        // If you're really stuck, look at line 110. Try to figure out how a FragmentManager works first
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
         // TODO Close the drawer when an item is selected
+        // Hint: The drawer object is declared as a global variable on line 28.
 
         return true;
     }
@@ -84,22 +97,20 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         // Set the view
         setContentView(R.layout.activity_navigation);
 
+        // The following code can be found in the slides under the toolbar/actionbar section
         // TODO find the toolbar/actionbar in the view
         // TODO Set up the actionbar using the support library
 
-        // TODO Instantiate the drawer object from the XML
-
-        // Set up the drawer toggle
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
-//                R.string.navigation_drawer_close);
-//        drawer.setDrawerListener(toggle);
-//        toggle.syncState();
+        // The following code can be found in the slides under the navigation drawer section
+        // TODO Instantiate the drawer object from the XML. Note that this class already has a member variable on line 28
+        // TODO Set up the drawer toggle and sync the state
 
         // Instantiate the navigation view, which shows the entire navigation drawer's view
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         // TODO set the proper NavigationItemSelectedListener
+        // HINT: Look at line 26... This class itself implements NavigationView.OnNavigationItemSelectedListener
 
-        // Use the fragment manager to begin a transaction to the first fragment
+        // Use the fragment manager to begin a transaction to the first fragment (by default)
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, TextListFabFragment.newInstance()).commit();
 

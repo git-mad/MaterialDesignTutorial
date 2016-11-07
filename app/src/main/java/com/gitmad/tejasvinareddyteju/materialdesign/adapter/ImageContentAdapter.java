@@ -64,6 +64,7 @@ public class ImageContentAdapter extends RecyclerView.Adapter<ImageContentAdapte
 
                 // TODO Use the Palette to determine a prominent color in the defaultImage
                 // TODO Then set the background color of the card view
+                // Hint: This code is in the slides. I suggest you use the synchronous version for now
             }
         });
     }

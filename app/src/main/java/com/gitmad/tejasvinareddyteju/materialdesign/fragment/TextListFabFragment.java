@@ -65,24 +65,27 @@ public class TextListFabFragment extends Fragment implements SwipeRefreshLayout.
         // Mock data
         textContentList.add(new TextContent("Testing"));
 
-        // TODO instantiate the RecyclerView from the XML
-        // TODO set up the recycler view to use a linear layout manager
+        // Set up recycler view and the layout
+        recyclerView = (RecyclerView) view.findViewById(R.id.app_list_recycler_view);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
         // Set up swipe-up-to-refresh layout
-        // TODO instantiate the SwipeRefreshLayout from the XML
+        // Note that the following code can be found in the slides
+        // TODO instantiate the SwipeRefreshLayout from the XML. Note the SRL is declared on line 32
         // TODO set the proper OnRefreshListener
+        // HINT: You will have to figure which XML the SRL is in, and then the correct element id for the SRL
+        // HINT: What does line 54 tell you about this class? What about line 26?
 
         // Reset the recycler view to set the adapter (automatically)
         refreshRecyclerView();
 
-        // Set up the FAB button to add a new item to the list whenever its clicked
-        // Use an atomic integer to maintain the int across multiple threads (the onClickListener happens in a
-        // different thread each time)
-        final AtomicInteger atomicInteger = new AtomicInteger(0);
-
+        // Some of the code for the FAB can be found in the slides. Doing the onClickListener is the hardest part
         // TODO instantiate the FAB from the XML
-        // TODO create an on click listener that will add a new item to the textContentList. Make sure to use the
-        // atomic integer to as a way to ID the text
+        // TODO create an on click listener that will add a new TextContent item to the textContentList
+        // Construct the TextContent with some text that you want to be displayed
+        // HINT: You will have to figure which XML the FAB is in, and then the correct element id for the FAB
+        // Challenge: Try to get a number to show up with the text, incrementing the number each time the FAB is pressed. Test it out! It's not as easy at it sounds :)
 
         return view;
     }
